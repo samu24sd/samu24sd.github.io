@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spelling Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 800px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .game-section {
+            margin-bottom: 20px;
+        }
+        .result {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+        button {
+            padding: 10px 20px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Interactive Spelling Game</h1>
+        <p>Practice your spelling and unlock fun rewards!</p>
+        
+        <div class="game-section" id="game-section">
+            <p id="prompt"></p>
+            <input type="text" id="answer" placeholder="Type your answer here" />
+            <button onclick="checkAnswer()">Submit</button>
+            <p class="result" id="result"></p>
+        </div>
+        
+        <div class="game-section hidden" id="reward-section">
+            <h2>Congratulations!</h2>
+            <p>You've earned a painting reward! 🎨</p>
+            <p><strong>Click to reveal:</strong></p>
+            <button onclick="showReward()">Show Reward</button>
+            <div id="reward" class="hidden">
+                <img src="https://via.placeholder.com/400x300?text=Your+Artwork!" alt="Reward" />
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const words = [
+            { word: "beautiful", hint: "Think of 'beauty' and add 'ful'." },
+            { word: "neighbor", hint: "Silent 'gh' after 'ei'." },
+            { word: "delicious", hint: "Remember 'delic' and add 'ious'." },
+            { word: "environment", hint: "Silent 'n' after 'iro'." },
+            { word: "encyclopedia", hint: "Break it down into chunks: 'en-cy-clo-pe-dia'." },
+            { word: "dolphin", hint: "'ph' makes the 'f' sound." },
+            { word: "symphony", hint: "'ph' makes the 'f' sound again!" },
+            { word: "accidentally", hint: "Starts with 'accid' and ends in 'ally'." },
+            { word: "journey", hint: "The 'ou' makes the 'ur' sound." },
+            { word: "artist", hint: "A simple one to finish up!" }
+        ];
+        
+        let currentWordIndex = 0;
+        
+        function showNextWord() {
+            const prompt = document.getElementById("prompt");
+            const result = document.getElementById("result");
+            const answer = document.getElementById("answer");
+            
+            if (currentWordIndex < words.length) {
+                prompt.textContent = `Spell the word: ${words[currentWordIndex].hint}`;
+                answer.value = "";
+                result.textContent = "";
+            } else {
+                document.getElementById("game-section").classList.add("hidden");
+                document.getElementById("reward-section").classList.remove("hidden");
+            }
+        }
+        
+        function checkAnswer() {
+            const answer = document.getElementById("answer").value.toLowerCase().trim();
+            const result = document.getElementById("result");
+            
+            if (answer === words[currentWordIndex].word) {
+                result.textContent = "Correct! 🎉";
+                result.style.color = "green";
+                currentWordIndex++;
+                setTimeout(showNextWord, 1500);
+            } else {
+                result.textContent = `Incorrect. Try again! Hint: ${words[currentWordIndex].hint}`;
+                result.style.color = "red";
+            }
+        }
+        
+        function showReward() {
+            document.getElementById("reward").classList.remove("hidden");
+        }
+        
+        // Start the game
+        showNextWord();
+    </script>
+</body>
+</html>
+"""
+
+# Save the HTML content to a file
+file_path = "/mnt/data/interactive_spelling_game.html"
+with open(file_path, "w") as file:
+    file.write(html_content)
+
+file_path
